@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button, Table, Tag } from 'antd'
+import { Card, Button, Table, Tag, Modal } from 'antd'
 import moment from 'moment'
 import XLSX from 'xlsx'
 
@@ -68,10 +68,10 @@ export default class NewsList extends Component {
                 columns.push({
                     title: '操作',
                     key: 'action', 
-                    render: (text, record)=>{
+                    render: (text,record)=>{
                         return (
                            <ButtonGroup>
-                               <Button size='small' type='danger'>删除</Button>
+                               <Button size='small' type='danger' onClick={this.deleteNews.bind(this,record.id)}>删除</Button>
                                <Button size='small' type='primary'>修改</Button>
                            </ButtonGroup> 
                         )
@@ -122,6 +122,11 @@ export default class NewsList extends Component {
 		XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
 		/* generate XLSX file and send to client */
 		XLSX.writeFile(wb, "sheetjs.xlsx")
+    }
+    deleteNews = (id)=>{
+        Modal.confirm({
+            title: '是否删除?'
+        })
     }
     componentDidMount(){
         this.getData()
