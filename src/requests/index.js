@@ -19,9 +19,9 @@ service.interceptors.response.use(res=>{
     }
 })
 
-export const getArticles = (limited=10, offset=0)=>{
+export const getArticles = (offset=0, limited=10)=>{
     return service.post('/ts/getAllNotice',{
-        limited,
-        offset
+        offset,
+        limited
     })
 }
