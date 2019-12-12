@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Card, Button, Table, Tag, Modal } from 'antd'
+import { Card, Button, Table, Tag, Modal,Typography } from 'antd'
 import moment from 'moment'
 import XLSX from 'xlsx'
 
-import { getArticles } from '../../requests'
+import { getArticles, delArticlesById } from '../../requests'
 
 const titleDisplayMap = {
     id: 'id',
@@ -71,7 +71,7 @@ export default class NewsList extends Component {
                     render: (text,record)=>{
                         return (
                            <ButtonGroup>
-                               <Button size='small' type='danger' onClick={this.deleteNews.bind(this,record.id)}>删除</Button>
+                               <Button size='small' type='danger' onClick={this.deleteNews.bind(this,record)}>删除</Button>
                                <Button size='small' type='primary'>修改</Button>
                            </ButtonGroup> 
                         )
@@ -123,9 +123,24 @@ export default class NewsList extends Component {
 		/* generate XLSX file and send to client */
 		XLSX.writeFile(wb, "sheetjs.xlsx")
     }
-    deleteNews = (id)=>{
+    deleteNews = (record)=>{
         Modal.confirm({
-            title: '是否删除?'
+            title: <Typography>确定要删除 <span style={{color :'red'}}>{record.title} 吗?</span></Typography>,
+            content: `此操作不可逆, 请谨慎操作.`,
+            okText: '我要删除',
+            cancelText: '不想删了',
+            onOk(){
+                delArticlesById(record.id)
+                    .then(res=>{
+                        console.log(res)
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+                    .finally(()=>{
+
+                    })
+            }
         })
     }
     componentDidMount(){

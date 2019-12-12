@@ -19,9 +19,16 @@ service.interceptors.response.use(res=>{
     }
 })
 
+// 查询公告列表
 export const getArticles = (offset=0, limited=10)=>{
     return service.post('/ts/getAllNotice',{
         offset,
         limited
+    })
+}
+// 删除公告列表
+export const delArticlesById = (id)=>{
+    return service.post('/ts/delNoticeById',{
+        id
     })
 }
