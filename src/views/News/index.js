@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button, Table, Tag, Modal,Typography } from 'antd'
+import { Card, Button, Table, Tag, Modal,Typography, message, Tooltip } from 'antd'
 import moment from 'moment'
 import XLSX from 'xlsx'
 
@@ -23,7 +23,11 @@ export default class NewsList extends Component {
             total: 0,
             isLoading: false,
             offset: 0,
-            limited: 10
+            limited: 10,
+            deleteArticleModalContent: null,
+            isShowArticleModal: false,
+            deleteArticleConfirmLoading: false,
+            deleteId: null
         }
     }
     getData = ()=>{
@@ -42,7 +46,9 @@ export default class NewsList extends Component {
                             render: (text, record)=>{
                                 const { amount } = record
                                 return (
-                                    <Tag color={amount>50?"volcano":"cyan"}>{record.amount}</Tag>
+                                    <Tooltip title={amount>50?"大于50":"小于50"}>
+                                        <Tag color={amount>50?"volcano":"cyan"}>{record.amount}</Tag>
+                                    </Tooltip>
                                 )
                             }
                         }
@@ -71,8 +77,8 @@ export default class NewsList extends Component {
                     render: (text,record)=>{
                         return (
                            <ButtonGroup>
-                               <Button size='small' type='danger' onClick={this.deleteNews.bind(this,record)}>删除</Button>
-                               <Button size='small' type='primary'>修改</Button>
+                               <Button size='small' type='danger' onClick={this.showDeleteNews.bind(this,record)}>删除</Button>
+                               <Button size='small' type='primary' onClick={this.toEdit.bind(this, record)}>修改</Button>
                            </ButtonGroup> 
                         )
                     }
@@ -123,24 +129,70 @@ export default class NewsList extends Component {
 		/* generate XLSX file and send to client */
 		XLSX.writeFile(wb, "sheetjs.xlsx")
     }
-    deleteNews = (record)=>{
-        Modal.confirm({
-            title: <Typography>确定要删除 <span style={{color :'red'}}>{record.title} 吗?</span></Typography>,
-            content: `此操作不可逆, 请谨慎操作.`,
-            okText: '我要删除',
-            cancelText: '不想删了',
-            onOk(){
-                delArticlesById(record.id)
-                    .then(res=>{
-                        console.log(res)
-                    })
-                    .catch(err=>{
-                        console.log(err)
-                    })
-                    .finally(()=>{
+    showDeleteNews = (record)=>{
+        // 函数方法调用 Modal
+        // Modal.confirm({
+        //     title: <Typography>确定要删除 <span style={{color :'red'}}>{record.title} 吗?</span></Typography>,
+        //     content: `此操作不可逆, 请谨慎操作.`,
+        //     okText: '我要删除',
+        //     cancelText: '不想删了',
+        //     onOk(){
+        //         delArticlesById(record.id)
+        //             .then(res=>{
+        //                 console.log(res)
+        //             })
+        //             .catch(err=>{
+        //                 console.log(err)
+        //             })
+        //             .finally(()=>{
 
-                    })
+        //             })
+        //     }
+        // })
+
+        // 组件方法调用 Modal
+        this.setState({
+            deleteArticleModalContent: record.title,
+            isShowArticleModal: true,
+            deleteId: record.id
+        })
+    }
+    deleteNews = ()=>{
+        this.setState({
+            deleteArticleConfirmLoading: true
+        })
+        delArticlesById(this.state.deleteId)
+            .then(res=>{
+                message.success(res.msg)
+                this.setState({
+                    offset: 0
+                }, ()=>{
+                    this.getData()
+                })
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+            .finally(()=>{
+                this.setState({
+                    deleteArticleConfirmLoading: false,
+                    isShowArticleModal: false
+                })
+            })
+    }
+    toEdit = (record)=>{
+        this.props.history.push({
+            pathname: `/admin/enwsedit/${record.id}`,
+            state: {
+                title: record.title
             }
+        });
+    }
+    hideDeleteModal = ()=>{
+        this.setState({
+            deleteArticleModalContent: null,
+            isShowArticleModal: false,
+            deleteArticleConfirmLoading: false
         })
     }
     componentDidMount(){
@@ -164,6 +216,16 @@ export default class NewsList extends Component {
                         onShowSizeChange: this.onShowSizeChange
                     }}
                 />
+                <Modal 
+                    title="此操作不可逆, 请谨慎操作!"
+                    visible={this.state.isShowArticleModal}
+                    maskClosable={false}
+                    confirmLoading={this.state.deleteArticleConfirmLoading}
+                    onCancel={this.hideDeleteModal}
+                    onOk={this.deleteNews}
+                >
+                    <Typography>确定要删除 <span style={{color :'red'}}>{this.state.deleteArticleModalContent} 吗?</span></Typography>
+                </Modal>
             </Card>
         )
     }

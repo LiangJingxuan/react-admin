@@ -42,7 +42,7 @@ export const adminRouter = [
         exact: true
     },
     {
-        pathname: '/admin/enwsedit',
+        pathname: '/admin/enwsedit/:id',
         component: NewsEdit,
         title: '编辑公告',
         icon: 'edit',
