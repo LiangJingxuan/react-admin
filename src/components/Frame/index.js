@@ -13,8 +13,8 @@ class Frame extends Component {
     }
     render() {
         const selectedKeysArr = this.props.location.pathname.split('/');
-        selectedKeysArr.length=2;
-        console.log(selectedKeysArr)
+        selectedKeysArr.length=3;
+        
         return (
             <Layout style={{height: '100%'}}>
                 <Header className="header xs-header">

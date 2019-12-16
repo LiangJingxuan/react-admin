@@ -182,7 +182,7 @@ export default class NewsList extends Component {
     }
     toEdit = (record)=>{
         this.props.history.push({
-            pathname: `/admin/enwsedit/${record.id}`,
+            pathname: `/admin/newslist/enwsedit/${record.id}`,
             state: {
                 title: record.title
             }

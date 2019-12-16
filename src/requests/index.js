@@ -32,3 +32,13 @@ export const delArticlesById = (id)=>{
         id
     })
 }
+// 获取公告详情
+export const getArticlesById = (id)=>{
+    return service.post('/ts/getNoticeById',{
+        id
+    })
+}
+// 修改公告
+export const editArticlesById = (id, data)=>{
+    return service.post(`/ts/upNoticeById/${id}`,data)
+}
