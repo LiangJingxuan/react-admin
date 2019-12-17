@@ -3,33 +3,39 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Layout, Menu, Icon, Dropdown, Avatar, Badge } from 'antd'
 
+import { getNotificationsListAll } from '../../actions/notifications'
 import logo from './logo_bot.png'
 import './frame.less'
 
 const { Header, Content, Sider } = Layout;
 
 class Frame extends Component {
+    componentDidMount(){
+        this.props.getNotificationsListAll()
+    }
     onMenuClick = ({key})=>{
         this.props.history.push(key);
     }
     onDropdownMenuClick = ({key})=>{
         this.props.history.push(key);
     }
-    menu = (
-        <Menu onClick={this.onDropdownMenuClick}>
-          <Menu.Item key='/admin/notifications'>
-            <Badge dot={Boolean(this.props.notificationsCount)}>
-                通知中心
-            </Badge>
-          </Menu.Item>
-          <Menu.Item key='/admin/settings'>
-            个人设置
-          </Menu.Item>
-          <Menu.Item key='/login'>
-            退出
-          </Menu.Item>
-        </Menu>
-    )
+    renderDropdown = ()=>{
+        return (
+            <Menu onClick={this.onDropdownMenuClick}>
+                <Menu.Item key='/admin/notifications'>
+                    <Badge dot={Boolean(this.props.notificationsCount)}>
+                        通知中心
+                    </Badge>
+                </Menu.Item>
+                <Menu.Item key='/admin/settings'>
+                    个人设置
+                </Menu.Item>
+                <Menu.Item key='/login'>
+                    退出
+                </Menu.Item>
+            </Menu>
+        )
+    }
     render() {
         const selectedKeysArr = this.props.location.pathname.split('/');
         selectedKeysArr.length=3;
@@ -41,7 +47,7 @@ class Frame extends Component {
                         <img src={logo} alt='兴商地产' />
                     </div>
                     <div>
-                        <Dropdown overlay={this.menu} trigger={['click']}>
+                        <Dropdown overlay={this.renderDropdown} trigger={['click']}>
                             <div className="ts-ant-dropdown-link">
                                 <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> 
                                 <span>欢迎您</span> 
@@ -94,4 +100,4 @@ const mapState = state=>{
         notificationsCount: state.notifications.list.filter(item=>item.isHasRead===false).length
     }
   }
-export default connect(mapState)(withRouter(Frame));
+export default connect(mapState,{ getNotificationsListAll })(withRouter(Frame));

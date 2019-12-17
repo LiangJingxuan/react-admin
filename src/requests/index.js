@@ -46,3 +46,7 @@ export const editArticlesById = (id, data)=>{
 export const getNoticeChart = ()=>{
     return service.post('/ts/getNoticeChart')
 }
+// 查询通知列表
+export const getNotificationsList = ()=>{
+    return service.post('/ts/getNotificationsList')
+}
