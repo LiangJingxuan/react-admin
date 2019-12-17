@@ -4,7 +4,8 @@ import {
     Home,
     User,
     NewsList,
-    NewsEdit
+    NewsEdit,
+    Notifications
 } from '../views'
 
 export const mainRouter = [
@@ -47,5 +48,12 @@ export const adminRouter = [
         title: '编辑公告',
         icon: 'edit',
         isNav: false
-    }
+    },
+    {
+        pathname: '/admin/notifications',
+        component: Notifications,
+        title: '通知中心',
+        isNav: false,
+        icon: 'smile'
+    },
 ]

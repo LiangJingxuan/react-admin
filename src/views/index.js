@@ -32,6 +32,10 @@ const NewsEdit = loadable({
     loader: ()=>import('./News/NewsEdit'),
     loading: Loading
 })
+const Notifications = loadable({
+    loader: ()=>import('./Notifications'),
+    loading: Loading
+})
 
 export {
     Login,
@@ -39,5 +43,6 @@ export {
     Home,
     User,
     NewsList,
-    NewsEdit
+    NewsEdit,
+    Notifications
 }

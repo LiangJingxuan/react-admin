@@ -42,3 +42,7 @@ export const getArticlesById = (id)=>{
 export const editArticlesById = (id, data)=>{
     return service.post(`/ts/upNoticeById/${id}`,data)
 }
+// 获取公告图表数据
+export const getNoticeChart = ()=>{
+    return service.post('/ts/getNoticeChart')
+}
