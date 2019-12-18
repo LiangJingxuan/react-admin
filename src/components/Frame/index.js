@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { Layout, Menu, Icon, Dropdown, Avatar, Badge } from 'antd'
 
 import { getNotificationsListAll } from '../../actions/notifications'
+import { logout } from '../../actions/login'
 import logo from './logo_bot.png'
 import './frame.less'
 
@@ -17,7 +18,11 @@ class Frame extends Component {
         this.props.history.push(key);
     }
     onDropdownMenuClick = ({key})=>{
-        this.props.history.push(key);
+        if(key==='/login'){
+
+        }else{
+            this.props.history.push(key);
+        }
     }
     renderDropdown = ()=>{
         return (
@@ -49,8 +54,8 @@ class Frame extends Component {
                     <div>
                         <Dropdown overlay={this.renderDropdown} trigger={['click']}>
                             <div className="ts-ant-dropdown-link">
-                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> 
-                                <span>欢迎您</span> 
+                                <Avatar src={this.props.avatar} /> 
+                                <span>{this.props.displayName}</span> 
                                 <Badge count={this.props.notificationsCount} offset={[-10,-10]}>
                                     <Icon type="down" />
                                 </Badge>
@@ -97,7 +102,9 @@ class Frame extends Component {
 }
 const mapState = state=>{
     return {
-        notificationsCount: state.notifications.list.filter(item=>item.isHasRead===false).length
+        notificationsCount: state.notifications.list.filter(item=>item.isHasRead===false).length,
+        avatar: state.user.avatar,
+        displayName: state.user.displayName
     }
   }
-export default connect(mapState,{ getNotificationsListAll })(withRouter(Frame));
+export default connect(mapState,{ getNotificationsListAll, logout })(withRouter(Frame));

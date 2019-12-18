@@ -10,17 +10,12 @@ import App from './App'
 import { mainRouter } from './routes'
 import store from './store'
 
-
 render(
     <Provider store={store}>
         <ConfigProvider locale={zhCN}>
             <Router>
                 <Switch>
-                    <Route path='/admin' render={
-                        (routerProps)=>{
-                            return <App {...routerProps} />
-                        }
-                    } />
+                    <Route path='/admin' component={App} />
                     {
                         mainRouter.map(route=>{
                             return (

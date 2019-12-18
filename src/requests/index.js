@@ -6,6 +6,11 @@ const service = axios.create({
     baseURL: isDev ? 'http://rap2api.taobao.org/app/mock/239464' : '',
 
 });
+// 不需要拦截的请求
+const service2 = axios.create({
+    baseURL: isDev ? 'http://rap2api.taobao.org/app/mock/239464' : '',
+
+});
 
 service.interceptors.request.use(config=>{
     return config
@@ -49,4 +54,8 @@ export const getNoticeChart = ()=>{
 // 查询通知列表
 export const getNotificationsList = ()=>{
     return service.post('/ts/getNotificationsList')
+}
+// 登录
+export const login = (data)=>{
+    return service2.post('/ts/login',data)
 }
