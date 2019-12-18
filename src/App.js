@@ -23,7 +23,8 @@ class App extends Component {
                                     exact={route.exact}
                                     render={
                                         (routerProps)=>{
-                                            return <route.component {...routerProps} />
+                                            const hasPermission = route.roles.includes(this.props.roles);
+                                            return hasPermission ? <route.component {...routerProps} /> : <Redirect to='/admin/noauth' />
                                         }
                                     }
                                 />
@@ -41,7 +42,8 @@ class App extends Component {
 }
 const mapState = state=>{
     return {
-        isLogin: state.user.isLogin
+        isLogin: state.user.isLogin,
+        roles: state.user.role
     }
 }
 export default connect(mapState)(App)

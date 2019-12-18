@@ -5,7 +5,9 @@ import {
     User,
     NewsList,
     NewsEdit,
-    Notifications
+    Notifications,
+    Profile,
+    NoAuth
 } from '../views'
 
 export const mainRouter = [
@@ -25,14 +27,16 @@ export const adminRouter = [
         component: Home,
         title: '首页',
         isNav: true,
-        icon: 'home'
+        icon: 'home',
+        roles: ['001','002','003']
     },
     {
         pathname: '/admin/user',
         component: User,
         title: '用户',
         isNav: true,
-        icon: 'smile'
+        icon: 'smile',
+        roles: ['001']
     },
     {
         pathname: '/admin/newslist',
@@ -40,20 +44,35 @@ export const adminRouter = [
         title: '公告',
         isNav: true,
         icon: 'notification',
-        exact: true
+        exact: true,
+        roles: ['001','002']
     },
     {
         pathname: '/admin/newslist/enwsedit/:id',
         component: NewsEdit,
         title: '编辑公告',
-        icon: 'edit',
-        isNav: false
+        isNav: false,
+        roles: ['001']
     },
     {
         pathname: '/admin/notifications',
         component: Notifications,
         title: '通知中心',
         isNav: false,
-        icon: 'smile'
+        roles: ['001','002','003']
+    },
+    {
+        pathname: '/admin/profile',
+        component: Profile,
+        title: '个人设置',
+        isNav: false,
+        roles: ['001','002','003']
+    },
+    {
+        pathname: '/admin/noauth',
+        component: NoAuth,
+        title: '无权访问',
+        isNav: false,
+        roles: ['001','002','003']
     },
 ]

@@ -19,7 +19,7 @@ class Frame extends Component {
     }
     onDropdownMenuClick = ({key})=>{
         if(key==='/login'){
-
+            this.props.logout()
         }else{
             this.props.history.push(key);
         }
@@ -32,7 +32,7 @@ class Frame extends Component {
                         通知中心
                     </Badge>
                 </Menu.Item>
-                <Menu.Item key='/admin/settings'>
+                <Menu.Item key='/admin/profile'>
                     个人设置
                 </Menu.Item>
                 <Menu.Item key='/login'>

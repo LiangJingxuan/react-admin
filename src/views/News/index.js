@@ -30,13 +30,17 @@ export default class NewsList extends Component {
             deleteId: null
         }
     }
+    setData = (state)=>{
+        if(!this.updater.isMounted(this))return;
+        this.setState(state)
+    }
     getData = ()=>{
         this.setState({
             isLoading: true
         });
         getArticles(this.state.offset,this.state.limited)
             .then(res=>{
-                console.log(res)
+                // console.log(res)
                 const columnKeys = Object.keys(res.list[0])
                 const columns = columnKeys.map(item=>{
                     if(item==='amount'){
@@ -83,17 +87,26 @@ export default class NewsList extends Component {
                         )
                     }
                 });
-                this.setState({
+                // 如果请求完成之后组件已经销毁，就不要再setState
+                // if(!this.updater.isMounted(this))return; 
+                // this.setState({
+                //     total: res.totle,
+                //     dataSource: res.list,
+                //     columns
+                // });
+                // 如果请求完成之后组件已经销毁，就不要再setState
+                this.setData({
                     total: res.totle,
                     dataSource: res.list,
                     columns
-                });
+                })
             })
             .catch(err=>{
                 console.log(err)
             })
             .finally(()=>{
-                this.setState({
+                // if(!this.updater.isMounted(this))return;
+                this.setData({
                     isLoading: false
                 })
             })

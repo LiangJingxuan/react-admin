@@ -22,7 +22,14 @@ export default (state=initState, action)=>{
                 isLoading: false
             }
         case type.LOGIN_FAILED :
-            return initState
+            return {
+                id: '',
+                displayName: '',
+                avatar: '',
+                isLogin: false,
+                isLoading: false,
+                roles: ''
+            }
         default :
             return state;
     }
