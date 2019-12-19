@@ -1,4 +1,5 @@
 import type from '../actions/actionTypes'
+import { stat } from 'fs';
 
 const userInfo = JSON.parse(window.localStorage.getItem('userInfo')) || JSON.parse(window.sessionStorage.getItem('userInfo'));
 const initState = {
@@ -29,6 +30,11 @@ export default (state=initState, action)=>{
                 isLogin: false,
                 isLoading: false,
                 roles: ''
+            }
+        case type.CHANGE_AVATAR :
+            return {
+                ...state,
+                avatar: action.payload.avatarUrl
             }
         default :
             return state;

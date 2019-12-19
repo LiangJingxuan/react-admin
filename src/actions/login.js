@@ -61,3 +61,12 @@ export const logout = ()=>{
         dispatch(loginFailed())
     }
 }
+// 修改头像
+export const avatarChange = (avatarUrl)=>{
+    return {
+        type: type.CHANGE_AVATAR,
+        payload: {
+            avatarUrl
+        }
+    }
+}

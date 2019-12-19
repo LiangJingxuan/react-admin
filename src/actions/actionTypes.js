@@ -9,5 +9,8 @@ export default {
     // 登录
     START_LOGIN: 'START_LOGIN',
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-    LOGIN_FAILED: 'LOGIN_FAILED'
+    LOGIN_FAILED: 'LOGIN_FAILED',
+
+    // 头像设置
+    CHANGE_AVATAR: 'CHANGE_AVATAR' ,
 }
