@@ -38,7 +38,7 @@ class Frame extends Component {
                 <Menu.Item key='/login'>
                     退出
                 </Menu.Item>
-                <Menu.Item key='/admin/immutabletest'>
+                <Menu.Item key='/admin/immutable'>
                     immutable练习
                 </Menu.Item>
             </Menu>

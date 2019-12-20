@@ -13,4 +13,8 @@ export default {
 
     // 头像设置
     CHANGE_AVATAR: 'CHANGE_AVATAR' ,
+
+    // immutable练习
+    ADD: 'ADD',
+    DIV: 'DIV'
 }

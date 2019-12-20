@@ -44,6 +44,10 @@ const Profile = loadable({
     loader: ()=>import('./Profile'),
     loading: Loading
 })
+const ImmuTableTest = loadable({
+    loader: ()=>import('./ImmutableTest'),
+    loading: Loading
+})
 
 export {
     Login,
@@ -54,5 +58,6 @@ export {
     NewsEdit,
     Notifications,
     NoAuth,
-    Profile
+    Profile,
+    ImmuTableTest
 }

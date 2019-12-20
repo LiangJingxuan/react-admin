@@ -7,7 +7,8 @@ import {
     NewsEdit,
     Notifications,
     Profile,
-    NoAuth
+    NoAuth,
+    ImmuTableTest
 } from '../views'
 
 export const mainRouter = [
@@ -72,6 +73,13 @@ export const adminRouter = [
         pathname: '/admin/noauth',
         component: NoAuth,
         title: '无权访问',
+        isNav: false,
+        roles: ['001','002','003']
+    },
+    {
+        pathname: '/admin/immutable',
+        component: ImmuTableTest,
+        title: 'immutable练习',
         isNav: false,
         roles: ['001','002','003']
     },
